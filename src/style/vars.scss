@@ -1,0 +1,4 @@
+$cardTop: #F3E5F5;
+$card: #F3E5F5;
+$cardShadow: transparentize(darken($card, 70%), 0.7);
+$cardHover: saturate(darken($card, 5%), 30%);
