@@ -2,3 +2,11 @@ $cardTop: #F3E5F5;
 $card: #F3E5F5;
 $cardShadow: transparentize(darken($card, 70%), 0.7);
 $cardHover: saturate(darken($card, 5%), 30%);
+$blue: #2222f5;
+$red: red;
+$green: green;
+$yellow: #dbdb2a;
+
+$colors: (blue: $blue, red: $red, green: $green, yellow: $yellow);
+
+$transition: all 0.3s ease;

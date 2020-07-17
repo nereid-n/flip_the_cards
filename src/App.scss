@@ -1,3 +1,5 @@
+@import "style/vars";
+
 .container {
   max-width: 1000px;
   padding: 0 15px;
@@ -6,4 +8,30 @@
 
 .no-click {
   pointer-events: none;
+}
+
+*:focus {
+  outline: none;
+}
+
+.btn {
+  min-width: 150px;
+  margin: 10px;
+  padding: 8px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: $transition;
+  &-primary {
+    color: #fff;
+    background-color: $blue;
+    &:hover {
+      background-color: darken($blue, 10%);
+    }
+    &.active {
+      background-color: lighten($blue, 10%);
+      pointer-events: none;
+    }
+  }
 }

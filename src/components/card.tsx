@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
+import { Cards } from '../store/cards';
 import './card.scss';
 
 interface StandardComponentProps {
-  data: {
-    img: string,
-    status: string
-  },
+  data: Cards,
   index: number,
   onClick: (index: number) => void
 }
 
 function Card(props: StandardComponentProps) {
 
-  const [wrapClassName, setWrapClassName] = useState('card-wrap');
+  const [wrapClassName, setWrapClassName] = useState('card-wrap ' + props.data.color);
 
   useEffect(() => {
     if (props.data.status === 'open') {
