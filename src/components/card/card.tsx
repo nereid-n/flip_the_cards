@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
-import { Cards } from '../store/cards';
+import { Cards } from '../../store1/cards';
 import './card.scss';
 
-interface StandardComponentProps {
+interface Props {
   data: Cards,
   index: number,
   onClick: (index: number) => void
 }
 
-function Card(props: StandardComponentProps) {
+function Card(props: Props) {
 
   const [wrapClassName, setWrapClassName] = useState('card-wrap ' + props.data.color);
 

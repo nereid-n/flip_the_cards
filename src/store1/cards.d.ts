@@ -83,7 +83,7 @@ function shuffle(array: object[]) {
   }
 }
 
-export function changeLevel(newLevel: number): Array<Cards> {
+export function changeLevel1(newLevel: number): Array<Cards> {
   level = newLevel;
   fillCards();
   return cards;
