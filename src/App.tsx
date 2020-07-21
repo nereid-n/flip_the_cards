@@ -9,43 +9,36 @@ import ModalWin from './components/modalWin/modalWin';
 import './App.scss';
 
 let openCards: number[] = [];
-let findCards: number = 0;
 function App(props: any) {
-  const [wrapClassName, setWrapClassName] = useState(`cards level-${props.cards.level}`);
+  const [wrapClassName, setWrapClassName] = useState('');
   const [menu, setMenu] = useState(false);
   const [modalWin, setModalWin] = useState(false);
 
   const onClick = (index: number) => {
     openCards.push(index);
     props.changeStatus(index, 'open');
-    if(openCards[1] !== undefined) {
+    if(openCards.length % 2 === 0) {
       if (!checkSame()) {
-        setWrapClassName(prevState => prevState + ' no-click');
+        setWrapClassName('');
         setTimeout(() => {
-          props.changeStatus(openCards[0], '');
-          props.changeStatus(openCards[1], '');
-          setWrapClassName((prevState) => prevState.replace(' no-click', ''));
-          openCards = [];
+          props.changeStatus(openCards[openCards.length - 1], '');
+          props.changeStatus(openCards[openCards.length - 2], '');
+          setWrapClassName('');
+          openCards.splice(-2, 2);
         }, 1000);
       }
-      else {
-        findCards += 2;
-        openCards = [];
-        if (findCards === props.cards.length) {
-          winGame();
-        }
+      else if (openCards.length === props.cards.length) {
+        winGame();
       }
     }
   }
   const updateGame = (index?: number) => {
     if (index !== undefined) {
       props.changeLevel(index)
-      setWrapClassName(prevState => prevState.replace(/level-\d/, `level-${index}`));
+    } else {
+      props.updateCards([]);
     }
-    const newCards: Array<Cards> = props.level;
-    updateCards(newCards);
     openCards = [];
-    findCards = 0;
     setMenu(false);
     setModalWin(false);
   }
@@ -53,8 +46,8 @@ function App(props: any) {
     setModalWin(true);
   }
   const checkSame = (): boolean => {
-    const { color: color1, img: img1 } = props.cards[openCards[0]];
-    const { color: color2, img: img2 } = props.cards[openCards[1]];
+    const { color: color1, img: img1 } = props.cards[openCards[openCards.length - 1]];
+    const { color: color2, img: img2 } = props.cards[openCards[openCards.length - 2]];
     return color1 === color2 && img1 === img2;
   }
 
@@ -67,8 +60,8 @@ function App(props: any) {
         >
           <span></span><span></span><span></span>
         </button>
-        <div className={wrapClassName}>
-          {props.cards.cards.map((card: Cards, index: number) => <Card
+        <div className={`cards level-${props.level} ${wrapClassName}`}>
+          {props.cards.map((card: Cards, index: number) => <Card
             data={card}
             index={index}
             key={`card-${card.id}`}
@@ -81,7 +74,6 @@ function App(props: any) {
         closeMenu={() => setMenu(false)}
       >
         <Menu
-          level={props.cards.level}
           updateGame={(index) => updateGame(index)}
         />
       </Modal>
@@ -98,9 +90,9 @@ function App(props: any) {
 }
 
 export default connect(
-  (state: CardsState): CardsState => ({
-    cards: state.cards,
-    level: state.level
+  (state: any): CardsState => ({
+    cards: state.cards.cards,
+    level: state.cards.level
   }),
   dispatch => ({
     changeLevel: (level: number) => dispatch(changeLevel(level)),

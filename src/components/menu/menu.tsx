@@ -1,9 +1,19 @@
 import React from 'react';
-import {levelData} from '../../store1/cards.d';
+import { connect, ConnectedProps  } from 'react-redux';
+import { levels } from "../../static/cardData";
+import { CardsState } from "../../store/cards/types";
 import './menu.scss';
 
-interface Props {
-  level: number,
+const mapState = (state: any): CardsState => ({
+  cards: state.cards.cards,
+  level: state.cards.level
+});
+
+const connector = connect(mapState);
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+type Props = PropsFromRedux & {
   updateGame: (index: number) => void,
 }
 
@@ -22,7 +32,7 @@ function Menu(props: Props) {
       <div className="levels-wrap">
         <h3>Levels</h3>
         <div className="levels">
-          {levelData.map((level, index) => <button
+          {levels.map((level, index) => <button
             onClick={() => props.updateGame(index)}
             key={`button-${index}`}
             className={buttonClassName(index)}>
@@ -37,4 +47,4 @@ function Menu(props: Props) {
   );
 }
 
-export default Menu;
+export default connector(Menu);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
-import { Cards } from '../../store1/cards';
+import { Cards } from "../../store/cards/types";
 import './card.scss';
 
 interface Props {
