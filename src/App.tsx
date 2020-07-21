@@ -19,7 +19,7 @@ function App(props: any) {
     props.changeStatus(index, 'open');
     if(openCards.length % 2 === 0) {
       if (!checkSame()) {
-        setWrapClassName('');
+        setWrapClassName('no-click');
         setTimeout(() => {
           props.changeStatus(openCards[openCards.length - 1], '');
           props.changeStatus(openCards[openCards.length - 2], '');
